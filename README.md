@@ -3,12 +3,8 @@
 ## Installation
 
 ```
-$ git clone https://gitlab.inovex.de/lfunk/reveal-js-folienmaster
-$ cd reveal-js-folienmaster
+$ git clone https://gitlab.inovex.de/mernst/svelte-talk
+$ cd svelte-talk
 $ npm install
 $ npm start
 ```
-
-## Instructions
-
-Find detailed instructions at https://revealjs.com/
