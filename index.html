@@ -1,0 +1,1010 @@
+<!doctype html>
+<html lang="de">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Svelte 101</title>
+
+    <meta name="description" content="Introduction to Svelte">
+    <meta name="author" content="Manuel Ernst">
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <link rel="stylesheet" href="dist/reset.css">
+    <link rel="stylesheet" href="dist/reveal.css">
+    <link rel="stylesheet" href="inovex/css/inovex.css" id="theme">
+    <link rel="stylesheet" href="inovex/css/highlight.css">
+
+    <!-- Code syntax highlighting -->
+    <!-- <link rel="stylesheet" href="inovex/css/prism.css"> -->
+
+    <!-- Printing and PDF exports -->
+    <!-- <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script> -->
+
+    <style>
+      .reveal section h2 img {
+        margin: 0;
+      }
+
+      .output {
+        position: relative;
+        background: #2c02ff;
+        width: 60%;
+        display: block;
+        color: #fff;
+        padding: 0.6em;
+        padding-left: 0.5em;
+      }
+
+      .output.floating {
+        position: absolute;
+        left: 50%;
+        top: 30%;
+      }
+
+      .output p {
+        padding-bottom: 0.5em;
+      }
+
+      .output h1, .output h2 {
+        color: #fff;
+        margin: 0;
+      }
+
+      .output::before {
+        position: absolute;
+        top: 0.3em;
+        right: 1em;
+        content: 'Output';
+        font-size: 0.8em;
+        font-style: italic;
+      }
+
+      button {
+        border: 0;
+        border-radius: 0.1em;
+        padding: 0.5em;
+        font-size: 0.6em;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section style="text-align:center">
+          <img src="media/svelte.svg" width="18%"><br>
+          <h1>Svelte 101</h1>
+          <img src="inovex/graphics/inovex.svg" width="15%" style="margin-bottom:2em">
+        </section>
+
+        <section>
+          <section data-transition="slide-in fade-out">
+            <h2>Popularity Comparison</h2>
+            <img src="media/react_popularity.png"/>
+
+            <em>Source: <a href="https://2022.stateofjs.com/">State Of JS 2022</a></em>
+          </section>
+  
+          <section data-transition="slide-out fade-in">
+            <h2>Popularity Comparison</h2>
+            <img src="media/svelte_popularity.png"/>
+
+            <em>Source: <a href="https://2022.stateofjs.com/">State Of JS 2022</a></em>
+          </section>
+
+          <section>
+            <h2>Popular Svelte Users</h2>
+
+            <div style="display:grid;grid-template-columns: repeat(4, 1fr);grid-gap: 2rem; justify-items: center; align-items: center; align-content: center;">
+              <img src="media/companies/1pw.svg" />
+              <img src="media/companies/apple.png" />
+              <img src="media/companies/cnn.png" />
+              <img src="media/companies/db.png" />
+              <img src="media/companies/decathlon.png" />
+              <img src="media/companies/ikea.png" />
+              <img src="media/companies/nyt.png" />
+              <img src="media/companies/spotify.png" />
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <h2>DOM-Intro</h2>
+
+          <p>
+            The DOM is the programming model that is used to interact with the page markup.
+          </p>
+
+          <p>It can be...</p>
+          <ul>
+            <li class="fragment">inspected,</li>
+            <li class="fragment">amended,</li>
+            <li class="fragment">mutated.</code></li>
+          </ul>
+
+          <img class="fragment" src="media/ohey.png" style="position:absolute;right:0;width:40%;bottom:0" />
+        </section>
+
+        <section>
+          <h2>DOM-Intro</h2>
+
+          <iframe src="https://svelte.dev/repl/f603e44111f5488e9b440646ad6322e0?version=3.55.1"
+            style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
+            title="dom-intro"
+            allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+            sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+          ></iframe>
+  
+          <aside class="notes">
+            const body = document.querySelector('body');
+
+            let counter = 0
+            
+            const button = document.createElement('button')
+            button.innerText = `clickcount: ${counter}`
+            
+            button.addEventListener('click', () => {
+              counter++
+              button.innerText = `clickcount: ${counter}`
+            })
+            
+            body.appendChild(button)
+          </aside>
+        </section>
+
+        <section>
+          <section data-transition="slide-in fade-out">
+            <h2>
+              <img src="media/react.svg" style="width:1em" /> Runtime DOM Diffing 
+            </h2>
+            <img src="media/vdom1.png" class="fragment"/>
+          </section>
+  
+          <section data-transition="slide-out fade-in">
+            <h2>
+              <img src="media/react.svg" style="width:1em" /> Runtime DOM Diffing 
+            </h2>
+            <img src="media/vdom2.png"/>
+          </section>          
+        </section>
+
+        <section>
+          <h2>Svelte Render Mechanism</h2>
+
+          <iframe src="https://svelte.dev/repl/f603e44111f5488e9b440646ad6322e0?version=3.55.1"
+            style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
+            title="dom-intro"
+            allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+            sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+          ></iframe>
+
+          <aside class="notes">
+            &lt;script lang="ts"&gt;
+              let count: number = 0
+            &lt;/script&gt;
+            
+            &lt;button on:click={() => count++}&gt;
+              clickcount: {count}
+            &lt;/button&gt;
+          </aside>
+        </section>
+
+        <section>
+          <h2>Feature Comparison</h2>
+
+          <table>
+            <tr>
+              <th></th>
+              <th><img src="media/react.svg" style="width:25%;margin: 0 auto"/></th>
+              <th><img src="media/svelte.svg" style="width:25%;margin: 0 auto"/></th>
+            </tr>
+            <tr class="fragment">
+              <th>Rendering</th>
+              <td>Runtime</td>
+              <td>Buildtime</td>
+            </tr>
+            <tr class="fragment">
+              <th>Runtime Environment</th>
+              <td>full-blown</td>
+              <td>minimal</td>
+            </tr>
+            <tr class="fragment">
+              <th>State Management</th>
+              <td>BYO</td>
+              <td>integrated</td>
+            </tr>
+            <tr class="fragment">
+              <th>Reactivity</th>
+              <td>-</td>
+              <td>integrated</td>
+            </tr>
+            <tr class="fragment">
+              <th>Styling</th>
+              <td>BYO</td>
+              <td>integrated</td>
+            </tr>
+            <tr class="fragment">
+              <th>Animations / Transitions</th>
+              <td>BYO</td>
+              <td>integrated</td>
+            </tr>
+          </table>
+        </section>
+
+        <section>
+          <section>
+            <h2>Svelte - Components</h2>
+            <p>A component is a reusable self-contained block of code that encapsulates:</p>
+            
+            <ul>
+              <li>Markup</li>
+              <li>Styling</li>
+              <li>Logic</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Svelte - Components</h2>
+            
+            <pre><code data-trim data-line-numbers="" class="html">
+              <h2>Hello world!</h2>
+            </code></pre>
+
+            <div class="output fragment">
+              <h2>Hello world!</h2>
+            </div>
+
+            <aside class="notes">
+              Inside the curly braces we can put any Javascript expression
+            </aside>
+          </section>
+
+          <section>
+            <h2>Templating</h2>
+            <pre><code data-trim data-line-numbers="|2|5|" class="html">
+              <script lang="ts">
+                const name = 'world';
+              </script>
+
+              <h2>Hello {name}!</h2>
+            </code></pre>
+
+            <div class="output fragment">
+              <h2>Hello world!</h2>
+            </div>
+          </section>
+
+          <section>
+            <h2>Dynamic Attributes</h2>
+            <pre><code data-trim data-line-numbers="|2|5|" class="html">
+              <script lang="ts">
+                const src = '/tutorial/image.gif'
+              </script>
+
+              &lt;img src={src}&gt;
+            </code></pre>
+
+            <div class="output fragment">
+              <img src="/media/man.gif" style="width:30%;margin: 0 auto;display:block" />
+            </div>
+
+            <pre class="fragment"><code data-trim data-line-numbers="" class="html">
+              <!-- short version -->
+              &lt;img {src}&gt;
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Referencing Components</h2>
+            <pre><code data-trim data-line-numbers="" class="html">
+              <!-- MyButton.svelte -->
+              <button>a button</button>
+            </code></pre>
+
+            <pre class="fragment"><code data-trim data-line-numbers="|3|6-8|" class="html">
+              <!-- ButtonContainer.svelte -->
+              <script>
+                import MyButton from './MyButton.svelte'
+              </script>
+              
+              &lt;MyButton /&gt;
+              &lt;MyButton /&gt;
+              &lt;MyButton /&gt;
+            </code></pre>
+
+            <div class="output fragment">
+              <button>a button</button>
+              <button>a button</button>
+              <button>a button</button>
+            </div>
+          </section>
+
+          <section>
+            <h2>Props for components</h2>
+            <pre><code data-trim data-line-numbers="|3|6|" class="html">
+              <!-- MyButton.svelte -->
+              <script>
+                export let caption = 'a button'
+              </script>
+
+              <button>{caption}</button>
+            </code></pre>
+
+            <pre class="fragment"><code data-trim data-line-numbers="|3|6-8|" class="html">
+              <!-- ButtonContainer.svelte -->
+              <script>
+                import MyButton from './MyButton.svelte'
+              </script>
+              
+              &lt;MyButton caption="One" /&gt;
+              &lt;MyButton caption="Two" /&gt;
+              &lt;MyButton caption="Three" /&gt;
+            </code></pre>
+
+            <div class="output fragment">
+              <button>One</button>
+              <button>Two</button>
+              <button>Three</button>
+            </div>
+          </section>
+
+          <section>
+            <h2>Styling</h2>
+            <pre class=""><code data-trim data-line-numbers="|5-7|" class="html">
+              <!-- MyButton.svelte -->
+              <button>a button</button>
+
+              <style>
+                button {
+                  color: #f00;
+                }
+              </style>
+            </code></pre>
+
+            <pre class="fragment"><code data-trim data-line-numbers="|3,6|7,10-12|" class="html">
+              <!-- ButtonContainer.svelte -->
+              <script>
+                import MyButton from './MyButton.svelte'
+              </script>
+              
+              &lt;MyButton /&gt;
+              <button>Another button</button>
+
+              <style>
+                button {
+                  color: #00f;
+                }
+              </style>
+            </code></pre>
+
+            <div class="output floating fragment">
+              <button style="color:#f00">a button</button>
+              <button style="color:#00f">Another Button</button>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Templating</h2>
+          </section>
+
+          <section>
+            <h2>Conditionals</h2>
+
+            <pre class=""><code data-trim data-line-numbers="|2|5|7|" class="html">
+              <script lang="ts">
+                let theme = 'light'
+              </script>
+
+              {#if theme === 'light'}
+                light theme
+              {:else}
+                dark theme
+              {/if}
+            </code></pre>
+
+            <aside class="notes">
+              any javascript expression is valid
+            </aside>
+          </section>
+
+          <section>
+            <h2>Svelte Conditionals</h2>
+
+            <iframe src="https://svelte.dev/repl/086ba0ec800d4fc4979395de3132b414?version=3.55.1"
+              style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
+              title="dom-intro"
+              allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+              sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+            ></iframe>
+          </section>
+
+          <section>
+            <h2>Loops</h2>
+
+            <pre class=""><code data-trim data-line-numbers="|2|6,8|7|" class="html">
+              <script>
+                let fruits = ['apple', 'pear','banana']
+              </script>
+               
+              <ul>
+                {#each fruits as fruit}
+                  <li>{fruit}</li>
+                {/each}	
+              </ul>
+            </code></pre>
+          </section>
+
+          <section>
+            <iframe src="https://svelte.dev/repl/80066484518a48a28540262caba2d021?version=3.55.1"
+              style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
+              title="dom-intro"
+              allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+              sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+            ></iframe>
+          </section>
+
+          <section>
+            <h2>Reactivity</h2>
+  
+            <pre><code data-trim data-line-numbers="|2|4,7|8|" class="html">
+              <script>
+                let count = 0
+  
+                const handleClick = () => count++
+              </script>
+              
+              &lt;button on:click={handleClick}&gt;
+                clickcount: {count}
+              &lt;/button&gt;
+            </code></pre>
+  
+            <h2 class="fragment">How does this work though?</h2>
+          </section>
+  
+          <section>
+            <iframe src="https://svelte.dev/repl/8d8c4e22abbd483a8c8aa2ac3edb07fe?version=3.55.1"
+              style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
+              title="dom-intro"
+              allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+              sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+            ></iframe>
+          </section>
+  
+          <section>
+            <h2>Reactivity</h2>
+  
+            <pre><code data-trim data-line-numbers="|2,3,8,9,10|5,12|" class="html">
+              <script>
+                let count = 0
+                const handleClick = () => count++
+
+                $: doubleCount = count * 2
+              </script>
+              
+              &lt;button on:click={handleClick}&gt;
+                clickcount: {count}
+              &lt;/button&gt;
+
+              &lt;h1&gt;doubleCount:&lt; {doubleCount}&gt;
+            </code></pre>
+
+            <h2 class="fragment">
+              How does this work though?
+              <small>(and what's this weird $: thing...)</small>
+            </h2>
+
+            <pre class="fragment" style="width:50%;border:5px solid #2c02ff;opacity:0.98;position:absolute;top:30%;left:30%"><code data-trim data-line-numbers="|4,6,11,12|3-6,11,12|8|" class="javascript">
+              // tangent: the $: thing
+
+              loop1:
+              for (i = 0; i < 3; i++) {
+                loop2:
+                for (j = 0; j < 3; j++) {
+                  if (...) {
+                    continue loop1;
+                  }
+                  ...
+                }
+              }
+            </code></pre>
+          </section>
+  
+          <section>
+            <iframe src="https://svelte.dev/repl/84ab6b19ba80480f8cdec8f4ed6875fe?version=3.55.1"
+              style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
+              title="dom-intro"
+              allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+              sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+            ></iframe>
+          </section>
+
+    			<section>
+            <h2>Reactivity Statements</h2>
+    
+            <pre class="fragment"><code data-trim data-line-numbers class="js">
+              $: console.log('User made' + count + 'clicks');
+            </code></pre>
+    
+            <pre class="fragment"><code data-trim data-line-numbers class="js">
+              $: {
+                console.log('Current score: ' + count);
+                alert('Score with premium: ' + count);
+              }
+            </code></pre>
+    
+            <pre class="fragment"><code data-trim data-line-numbers class="js">
+              $: if (count > 10) {
+                console.log('ten is the maximum sorry');
+                count = 10;
+              }
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Events</h2>
+          </section>
+
+          <section>
+            <h2>DOM Events</h2>
+            <pre>
+              <code data-trim data-line-numbers="|2|4-7,10|11|" class="html">
+                <script>
+                  let m = { x: 0, y: 0 };
+    
+                  function handleMousemove(event) {
+                    m.x = event.clientX;
+                    m.y = event.clientY;
+                  }
+                </script>
+    
+                &lt;div on:mousemove={handleMousemove}&gt;
+                  The mouse position is {m.x} x {m.y}
+                &lt;/div&gt;
+              </code>
+            </pre>
+
+            <p class="fragment">All regular DOM events can be used, prefixed with the <code>:on</code> keyword.</p>
+          </section>
+        
+          <section>
+            <h2>Dispatch Custom Events</h2>
+            <pre>
+              <code data-trim data-line-numbers="|3,4|6-8,11|" class="html">
+                <!-- DatePicker.svelte -->
+                <script lang="ts">
+                  import { createEventDispatcher } from 'svelte'
+                  const dispatch = createEventDispatcher()
+  
+                  function pick() {
+                    dispatch('datePicked', { date: new Date() })
+                  }
+                </script>
+  
+                &lt;button on:click={pick}&gt;
+                  Pick now
+                &lt;/button&gt;
+              </code>
+            </pre>
+          </section>
+  
+          <section>
+            <h2>Handle Custom Events</h2>
+            <pre>
+              <code data-trim data-line-numbers="|2|4-7|10|12-14|" class="html">
+                <script>
+                  import DatePicker from './DatePicker.svelte'
+
+                  let pickedDate = null
+                  function handleMessage(event) {
+                    pickedDate = event.detail.date
+                  }
+                </script>
+  
+                &lt;DatePicker on:datePicked={handleMessage} /&gt;
+
+                {#if pickedDate}
+                  Date has been picked: {pickedDate}
+                {/if}
+              </code>
+            </pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Async Data Handling</h2>
+
+            <pre><code data-trim data-line-numbers="|2|5,6,11|5-8,11|5-11|" class="html">
+              <script>
+                const promise = fetchSomeData()
+              </script>
+              
+              {#await promise}
+                ...loading...
+              {:then data}
+                I retrieved some data: {data}
+              {:catch error}
+                {error.message}
+              {/await}
+            </code></pre>
+          </section>
+
+          <section>
+            <iframe src="https://svelte.dev/repl/99a9566b8082457ba47b5e99433fc34e?version=3.55.1"
+              style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
+              title="dom-intro"
+              allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+              sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+            ></iframe>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Component Lifecycle hooks</h2>
+            <p>Execute certain actions during the lifecycle of a component</p>
+
+            <p>Possible use cases:</p>
+            <ul>
+              <li>load data from a backend</li>
+              <li>start a timer</li>
+              <li>cleanup resources</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2><code>onMount</code> / <code>onDestroy</code></h2>
+            <pre><code data-trim data-line-numbers="|2|4-5|4-8|10|13|" class="html">
+              <script>
+                import { onMount, onDestroy } from 'svelte'
+
+                let interval = null
+                let elapsedTime = 0
+                onMount(() => {
+                  interval = setInterval(() => elapsedTime++, 1000)
+                })
+
+                onDestroy(() => clearInterval(interval))
+              </script>
+
+              elapsedTime: {elapsedTime} second(s)
+            </code></pre>
+          </section>
+
+          <section>
+            <h2><code>onMount</code> / <code>onDestroy</code></h2>
+
+            <p>Instead of using <code>onDestroy</code> just return a method from <code>onMount</code></p>
+
+            <pre><code data-trim data-line-numbers="|5-9|8|" class="html">
+              <script>
+                import { onMount } from 'svelte'
+
+                let elapsedTime = 0
+                onMount(() => {
+                  const interval = setInterval(() => elapsedTime++, 1000)
+
+                  return () => clearInterval(interval)
+                })
+              </script>
+
+              elapsedTime: {elapsedTime} second(s)
+            </code></pre>
+          </section>
+
+          <section>
+            There are a other hooks like <code>beforeUpdate</code>, <code>afterUpdate</code>, but they are not as relevant.
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>(Global) State Handling</h2>
+
+            <ul>
+              <li class="fragment">built-in</li>
+              <li class="fragment">holds (applicationwide) data</li>
+              <li class="fragment">means of communication (messaging) between application parts</li>
+            </ul>
+          </section>
+
+          <section>
+            <h2>Writable Store</h2>
+
+            <pre><code data-trim data-line-numbers="|1,3|5-8|10,11|13-16|" class="js">
+              import { writable } from 'svelte/store'
+
+              const fruitStore = writable&lt;string[]&gt;([]) 
+
+              // subscribe to updates
+              fruitStore.subscribe(fruits => {
+                console.log(fruits)
+              })
+
+              // set the value of the store
+              fruitStore.set(['apple', 'banana', 'pear'])
+
+              // update the value in the context of existing values
+              fruitStore.update(currentFruits => {
+                return [...currentFruits, 'grapes']
+              })
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Render store data</h2>
+            <pre><code data-trim data-line-numbers="|3|5|5-8|13-15|2,10|" class="html">
+              <script lang="ts">
+                import { onDestroy } from 'svelte'
+                import fruitStore from './store'
+                
+                let myFruits = []
+                const unsubscribe = fruitStore.subscribe(fruitState => {
+                  myFruits = fruitState
+                })
+
+                onDestroy(unsubscribe)
+              </script>
+
+              {#each myFruits as fruit}
+                {fruit}<br>
+              {/each}
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Store Auto-subscriptions</h2>
+
+            <pre><code data-trim data-line-numbers="|2|5|" class="html">
+              <script lang="ts">
+                import fruitStore from './store'
+              </script>
+
+              {#each $fruitStore as fruit}
+                {fruit}<br>
+              {/each}
+            </code></pre>
+
+            <h2 class="fragment">How does this work though?</h2>
+          </section>
+
+          <section>
+            <iframe src="https://svelte.dev/repl/58ec0f03c23d43c9a6de042261c623b8?version=3.55.1"
+              style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
+              title="dom-intro"
+              allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+              sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+            ></iframe>
+          </section>
+
+          <section>
+            <h2>Custom Stores and Hooks</h2>
+
+            <pre class="fragment"><code data-trim data-line-numbers="4,16|1,4,7,13,16|1,4,7-8,10,13,16|1,4,7-8,10-13,16|1-8,10-13,16|1-8,10-16|" class="ts">
+              import { onMount } from 'svelte'
+              import { writable } from 'svelte/store'
+
+              export default function useElapsed() {
+                const { subscribe, update } = writable(0)
+                
+                onMount(() => {
+                  const interval = setInterval(() => {
+                    update(elapsed => elapsed + 1)
+                  }, 1000)
+                  
+                  return () => clearInterval(interval)
+                })
+                
+                return { subscribe }
+              }
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Custom Stores and Hooks</h2>
+
+            <pre><code data-trim data-line-numbers="|2-4|7|" class="html">
+              <script>
+                import useElapsed from './useElapsed'
+                
+                const elapsed = useElapsed()
+              </script>
+              
+              {$elapsed}
+            </code></pre>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>Transitions / Animations</h2>
+          </section>
+
+          <section>
+            <h2>Transitions</h2>
+
+            <pre><code data-trim data-line-numbers="|2|9-11|5-7|" class="html">
+              <script>
+                let visible = false
+              </script>
+              
+              &lt;button on:click={() => visible = !visible}&gt;
+                toggle
+              &lt;/button&gt;
+              
+              {#if visible}
+                <h1>ohey!</h1>
+              {/if}
+            </code></pre>
+
+            <p class="fragment">Problem: A declarative template does not account for in between states.</p>
+            <h3 class="fragment fade-in">How can we fade between states?</h3>
+          </section>
+
+          <section>
+            <h2>Transitions</h2>
+
+            <pre><code data-trim data-line-numbers="|4,7-9,11,13|2,12|" class="html">
+              <script>
+                import { fade } from 'svelte/transition'
+                
+                let visible = false
+              </script>
+              
+              &lt;button on:click={() => visible = !visible}&gt;
+                toggle
+              &lt;/button&gt;
+              
+              {#if visible}
+                &lt;h1 transition:fade&gt;ohey!&lt;/h1&gt;
+              {/if}
+            </code></pre>
+          </section>
+
+          <section>
+            <iframe src="https://svelte.dev/repl/ff044d26995644b888303e0a0b5e204d?version=3.55.1"
+              style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
+              title="dom-intro"
+              allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+              sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+            ></iframe>
+          </section>
+
+          <section>
+            <h2>Transitions</h2>
+
+            <ul>
+              <li class="fragment">
+                7 built-in transitions:<br>
+                <code>fade</code>, <code>blur</code>, <code>fly</code>, <code>slide</code>, <code>scale</code>, <code>draw</code>, <code>crossfade</code>
+              </li>
+              <li class="fragment">In and out transitions can be declared separately</li>
+              <li class="fragment">Transitions can be parametrized</li>
+              <li class="fragment">Custom transitions</li>
+            </ul>
+
+            <pre class="fragment"><code data-trim data-line-numbers="" class="html">
+              &lt;p in:fly="{{ y: 200, duration: 2000 }}" out:fade&gt;
+                Flies in, fades out
+              &lt;/p&gt;
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Animations</h2>
+          </section>
+
+          <section>
+            <h2>Animations</h2>
+
+            <pre><code data-trim data-line-numbers="|10-12|10-15,6-7|10-15,2-7|" class="html">
+              <script>
+                import { tweened } from 'svelte/motion'
+              
+                const position = tweened(0, { duration: 800 })
+
+                const moveLeft = () => position.set(0)
+                const moveRight = () => position.set(80)
+              </script>
+              
+              <div>
+                <div style="left: {$position}%"></div>
+              </div>
+              
+              &lt;button on:click={moveLeft}&gt;Left&lt;/button&gt;
+              &lt;button on:click={moveRight}&gt;Right&lt;/button&gt;
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Animations</h2>
+
+            <code>tweened</code> also accepts an easing parameter
+            <pre><code data-trim data-line-numbers="|3,7|" class="html">
+              <script>
+                import { tweened } from 'svelte/motion'
+                import { cubicOut } from 'svelte/easing';
+               
+                const position = tweened(0, { 
+                  duration: 800, 
+                  easing: cubicOut
+                })
+              </script>
+            </code></pre>
+
+            <p class="fragment">
+              There are a couple of built-in easing methods:<br>
+              <code>back</code>, <code>bounce</code>, <code>circ</code>, <code>cubic</code>, <code>elastic</code>, <code>expo</code>, <code>quad</code>, <code>quart</code>, <code>quint</code>, <code>sine</code><br>
+            </p>
+
+            <p class="fragment">
+              Each as a <em>in</em>, a <em>out</em> and a <em>inOut</em> variant.
+            </p>
+          </section>
+
+          <section>
+            <iframe src="https://svelte.dev/repl/46da952c2a2c476d89e35db06a618d9d?version=3.55.1"
+              style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
+              title="dom-intro"
+              allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+              sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+            ></iframe>
+          </section>
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+        plugins: [ 
+          RevealMarkdown, 
+          RevealHighlight, 
+          RevealNotes
+        ],
+
+        // controls: true,
+        // progress: true,
+        // history: true,
+        // center: true,
+
+        // transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+        // // Optional reveal.js plugins
+        // dependencies: [
+        //   // { src: 'plugin/markdown/marked.js' },
+        //   // { src: 'plugin/markdown/markdown.js' },
+        //   // { src: 'plugin/notes/notes.js', async: true },
+        //   // { src: 'inovex/js/prism.js', async: true, condition: function() { return Boolean(document.querySelector( 'pre code' )); } },
+        //   { src: 'plugin/zoom-js/zoom.js', async: true },
+        //   { src: 'plugin/notes/notes.js', async: true }
+        // ]
+      });
+    </script>
+
+  </body>
+</html>
