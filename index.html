@@ -97,7 +97,7 @@
 
             <em>Source: <a href="https://2022.stateofjs.com/">State Of JS 2022</a></em>
           </section>
-  
+
           <section data-transition="slide-out fade-in">
             <h2>Popularity Comparison</h2>
             <img src="media/svelte_popularity.png"/>
@@ -122,7 +122,7 @@
         </section>
 
         <section>
-          <h2>DOM-Intro</h2>
+          <h2>DOM Intro</h2>
 
           <p>
             The DOM is the programming model that is used to interact with the page markup.
@@ -139,7 +139,7 @@
         </section>
 
         <section>
-          <h2>DOM-Intro</h2>
+          <h2>DOM Intro</h2>
 
           <iframe src="https://svelte.dev/repl/f603e44111f5488e9b440646ad6322e0?version=3.55.1"
             style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
@@ -147,20 +147,20 @@
             allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
             sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
           ></iframe>
-  
+
           <aside class="notes">
             const body = document.querySelector('body');
 
             let counter = 0
-            
+
             const button = document.createElement('button')
             button.innerText = `clickcount: ${counter}`
-            
+
             button.addEventListener('click', () => {
               counter++
               button.innerText = `clickcount: ${counter}`
             })
-            
+
             body.appendChild(button)
           </aside>
         </section>
@@ -168,17 +168,17 @@
         <section>
           <section data-transition="slide-in fade-out">
             <h2>
-              <img src="media/react.svg" style="width:1em" /> Runtime DOM Diffing 
+              <img src="media/react.svg" style="width:1em" /> Runtime DOM Diffing
             </h2>
             <img src="media/vdom1.png" class="fragment"/>
           </section>
-  
+
           <section data-transition="slide-out fade-in">
             <h2>
-              <img src="media/react.svg" style="width:1em" /> Runtime DOM Diffing 
+              <img src="media/react.svg" style="width:1em" /> Runtime DOM Diffing
             </h2>
             <img src="media/vdom2.png"/>
-          </section>          
+          </section>
         </section>
 
         <section>
@@ -195,7 +195,7 @@
             &lt;script lang="ts"&gt;
               let count: number = 0
             &lt;/script&gt;
-            
+
             &lt;button on:click={() => count++}&gt;
               clickcount: {count}
             &lt;/button&gt;
@@ -248,7 +248,7 @@
           <section>
             <h2>Svelte - Components</h2>
             <p>A component is a reusable self-contained block of code that encapsulates:</p>
-            
+
             <ul>
               <li>Markup</li>
               <li>Styling</li>
@@ -258,7 +258,7 @@
 
           <section>
             <h2>Svelte - Components</h2>
-            
+
             <pre><code data-trim data-line-numbers="" class="html">
               <h2>Hello world!</h2>
             </code></pre>
@@ -319,7 +319,7 @@
               <script>
                 import MyButton from './MyButton.svelte'
               </script>
-              
+
               &lt;MyButton /&gt;
               &lt;MyButton /&gt;
               &lt;MyButton /&gt;
@@ -333,7 +333,7 @@
           </section>
 
           <section>
-            <h2>Props for components</h2>
+            <h2>Props for Components</h2>
             <pre><code data-trim data-line-numbers="|3|6|" class="html">
               <!-- MyButton.svelte -->
               <script>
@@ -348,7 +348,7 @@
               <script>
                 import MyButton from './MyButton.svelte'
               </script>
-              
+
               &lt;MyButton caption="One" /&gt;
               &lt;MyButton caption="Two" /&gt;
               &lt;MyButton caption="Three" /&gt;
@@ -379,7 +379,7 @@
               <script>
                 import MyButton from './MyButton.svelte'
               </script>
-              
+
               &lt;MyButton /&gt;
               <button>Another button</button>
 
@@ -440,11 +440,11 @@
               <script>
                 let fruits = ['apple', 'pear','banana']
               </script>
-               
+
               <ul>
                 {#each fruits as fruit}
                   <li>{fruit}</li>
-                {/each}	
+                {/each}
               </ul>
             </code></pre>
           </section>
@@ -460,22 +460,22 @@
 
           <section>
             <h2>Reactivity</h2>
-  
+
             <pre><code data-trim data-line-numbers="|2|4,7|8|" class="html">
               <script>
                 let count = 0
-  
+
                 const handleClick = () => count++
               </script>
-              
+
               &lt;button on:click={handleClick}&gt;
                 clickcount: {count}
               &lt;/button&gt;
             </code></pre>
-  
+
             <h2 class="fragment">How does this work though?</h2>
           </section>
-  
+
           <section>
             <iframe src="https://svelte.dev/repl/8d8c4e22abbd483a8c8aa2ac3edb07fe?version=3.55.1"
               style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
@@ -484,10 +484,10 @@
               sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
             ></iframe>
           </section>
-  
+
           <section>
             <h2>Reactivity</h2>
-  
+
             <pre><code data-trim data-line-numbers="|2,3,8,9,10|5,12|" class="html">
               <script>
                 let count = 0
@@ -495,7 +495,7 @@
 
                 $: doubleCount = count * 2
               </script>
-              
+
               &lt;button on:click={handleClick}&gt;
                 clickcount: {count}
               &lt;/button&gt;
@@ -523,7 +523,7 @@
               }
             </code></pre>
           </section>
-  
+
           <section>
             <iframe src="https://svelte.dev/repl/84ab6b19ba80480f8cdec8f4ed6875fe?version=3.55.1"
               style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
@@ -535,18 +535,18 @@
 
     			<section>
             <h2>Reactivity Statements</h2>
-    
+
             <pre class="fragment"><code data-trim data-line-numbers class="js">
               $: console.log('User made' + count + 'clicks');
             </code></pre>
-    
+
             <pre class="fragment"><code data-trim data-line-numbers class="js">
               $: {
                 console.log('Current score: ' + count);
                 alert('Score with premium: ' + count);
               }
             </code></pre>
-    
+
             <pre class="fragment"><code data-trim data-line-numbers class="js">
               $: if (count > 10) {
                 console.log('ten is the maximum sorry');
@@ -567,13 +567,13 @@
               <code data-trim data-line-numbers="|2|4-7,10|11|" class="html">
                 <script>
                   let m = { x: 0, y: 0 };
-    
+
                   function handleMousemove(event) {
                     m.x = event.clientX;
                     m.y = event.clientY;
                   }
                 </script>
-    
+
                 &lt;div on:mousemove={handleMousemove}&gt;
                   The mouse position is {m.x} x {m.y}
                 &lt;/div&gt;
@@ -582,7 +582,7 @@
 
             <p class="fragment">All regular DOM events can be used, prefixed with the <code>:on</code> keyword.</p>
           </section>
-        
+
           <section>
             <h2>Dispatch Custom Events</h2>
             <pre>
@@ -591,19 +591,19 @@
                 <script lang="ts">
                   import { createEventDispatcher } from 'svelte'
                   const dispatch = createEventDispatcher()
-  
+
                   function pick() {
                     dispatch('datePicked', { date: new Date() })
                   }
                 </script>
-  
+
                 &lt;button on:click={pick}&gt;
                   Pick now
                 &lt;/button&gt;
               </code>
             </pre>
           </section>
-  
+
           <section>
             <h2>Handle Custom Events</h2>
             <pre>
@@ -616,7 +616,7 @@
                     pickedDate = event.detail.date
                   }
                 </script>
-  
+
                 &lt;DatePicker on:datePicked={handleMessage} /&gt;
 
                 {#if pickedDate}
@@ -635,7 +635,7 @@
               <script>
                 const promise = fetchSomeData()
               </script>
-              
+
               {#await promise}
                 ...loading...
               {:then data}
@@ -658,7 +658,7 @@
 
         <section>
           <section>
-            <h2>Component Lifecycle hooks</h2>
+            <h2>Component Lifecycle Hooks</h2>
             <p>Execute certain actions during the lifecycle of a component</p>
 
             <p>Possible use cases:</p>
@@ -731,7 +731,7 @@
             <pre><code data-trim data-line-numbers="|1,3|5-8|10,11|13-16|" class="js">
               import { writable } from 'svelte/store'
 
-              const fruitStore = writable&lt;string[]&gt;([]) 
+              const fruitStore = writable&lt;string[]&gt;([])
 
               // subscribe to updates
               fruitStore.subscribe(fruits => {
@@ -749,12 +749,12 @@
           </section>
 
           <section>
-            <h2>Render store data</h2>
+            <h2>Render Store Data</h2>
             <pre><code data-trim data-line-numbers="|3|5|5-8|13-15|2,10|" class="html">
               <script lang="ts">
                 import { onDestroy } from 'svelte'
                 import fruitStore from './store'
-                
+
                 let myFruits = []
                 const unsubscribe = fruitStore.subscribe(fruitState => {
                   myFruits = fruitState
@@ -770,7 +770,7 @@
           </section>
 
           <section>
-            <h2>Store Auto-subscriptions</h2>
+            <h2>Store Auto Subscriptions</h2>
 
             <pre><code data-trim data-line-numbers="|2|5|" class="html">
               <script lang="ts">
@@ -803,15 +803,15 @@
 
               export default function useElapsed() {
                 const { subscribe, update } = writable(0)
-                
+
                 onMount(() => {
                   const interval = setInterval(() => {
                     update(elapsed => elapsed + 1)
                   }, 1000)
-                  
+
                   return () => clearInterval(interval)
                 })
-                
+
                 return { subscribe }
               }
             </code></pre>
@@ -823,10 +823,10 @@
             <pre><code data-trim data-line-numbers="|2-4|7|" class="html">
               <script>
                 import useElapsed from './useElapsed'
-                
+
                 const elapsed = useElapsed()
               </script>
-              
+
               {$elapsed}
             </code></pre>
           </section>
@@ -844,11 +844,11 @@
               <script>
                 let visible = false
               </script>
-              
+
               &lt;button on:click={() => visible = !visible}&gt;
                 toggle
               &lt;/button&gt;
-              
+
               {#if visible}
                 <h1>ohey!</h1>
               {/if}
@@ -864,14 +864,14 @@
             <pre><code data-trim data-line-numbers="|4,7-9,11,13|2,12|" class="html">
               <script>
                 import { fade } from 'svelte/transition'
-                
+
                 let visible = false
               </script>
-              
+
               &lt;button on:click={() => visible = !visible}&gt;
                 toggle
               &lt;/button&gt;
-              
+
               {#if visible}
                 &lt;h1 transition:fade&gt;ohey!&lt;/h1&gt;
               {/if}
@@ -917,17 +917,17 @@
             <pre><code data-trim data-line-numbers="|10-12|10-15,6-7|10-15,2-7|" class="html">
               <script>
                 import { tweened } from 'svelte/motion'
-              
+
                 const position = tweened(0, { duration: 800 })
 
                 const moveLeft = () => position.set(0)
                 const moveRight = () => position.set(80)
               </script>
-              
+
               <div>
                 <div style="left: {$position}%"></div>
               </div>
-              
+
               &lt;button on:click={moveLeft}&gt;Left&lt;/button&gt;
               &lt;button on:click={moveRight}&gt;Right&lt;/button&gt;
             </code></pre>
@@ -941,9 +941,9 @@
               <script>
                 import { tweened } from 'svelte/motion'
                 import { cubicOut } from 'svelte/easing';
-               
-                const position = tweened(0, { 
-                  duration: 800, 
+
+                const position = tweened(0, {
+                  duration: 800,
                   easing: cubicOut
                 })
               </script>
@@ -955,7 +955,7 @@
             </p>
 
             <p class="fragment">
-              Each as a <em>in</em>, a <em>out</em> and a <em>inOut</em> variant.
+              Each as an <em>in</em>, an <em>out</em>, and an <em>inOut</em> variant.
             </p>
           </section>
 
@@ -987,7 +987,7 @@
             <li>Documentation: <a href="https://svelte.dev/docs">https://svelte.dev/docs</a></li>
             <li>Sveltekit: <a href="https://kit.svelte.dev">https://kit.svelte.dev</a></li>
           </ul>
-          
+
         </section>
       </div>
     </div>
@@ -1002,9 +1002,9 @@
       // - https://revealjs.com/config/
       Reveal.initialize({
         hash: true,
-        plugins: [ 
-          RevealMarkdown, 
-          RevealHighlight, 
+        plugins: [
+          RevealMarkdown,
+          RevealHighlight,
           RevealNotes
         ],
 
