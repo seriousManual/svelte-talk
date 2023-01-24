@@ -105,19 +105,18 @@
         <section>
           <h2>Manuel Ernst</h2>
           software engineer at inovex 
-
         </section>
 
         <section>
           <section data-transition="slide-in fade-out">
             <h2>Usage</h2>
 
-            <div class="fragment" style="display:flex;gap:4rem;justify-content: center;">
+            <div class="fragment" style="display:flex;gap:4rem;justify-content:center;">
               <img src="media/react.svg" style="width:12%" />
               <img src="media/react_usage.png" style="width:50%" />  
             </div>
 
-            <div class="fragment" style="display:flex;gap:4rem;justify-content: center;">
+            <div class="fragment" style="display:flex;gap:4rem;justify-content:center;">
               <img src="media/svelte.svg" style="width:12%">
               <img src="media/svelte_usage.png" style="width:50%" />  
             </div>
@@ -128,26 +127,26 @@
           <section data-transition="slide-out fade-in">
             <h2>Interest</h2>
 
-            <div class="fragment" style="display:flex;gap:4rem;justify-content: center;">
+            <div class="fragment" style="display:flex;gap:4rem;justify-content:center;">
               <img src="media/react.svg" style="width:12%" />
               <img src="media/react_interest.png" style="width:50%" />  
             </div>
 
-            <div class="fragment" style="display:flex;gap:4rem;justify-content: center;">
+            <div class="fragment" style="display:flex;gap:4rem;justify-content:center;">
               <img src="media/svelte.svg" style="width:12%" />
               <img src="media/svelte_interest.png" style="width:50%" />  
             </div>
 
             <em>Source: <a href="https://2022.stateofjs.com/">State Of JS 2022</a></em>
           </section>
-
+<!--
           <section>
             <h2>Svelte Retention</h2>
             <img src="media/svelte_potential.png"/><br>
 
             <em>Source: <a href="https://2022.stateofjs.com/">State Of JS 2022</a></em>
           </section>
-
+-->
           <section>
             <h2>Popular Svelte Users</h2>
 
@@ -213,7 +212,7 @@
             <h2>DOM Intro</h2>
 
             <p>
-              The DOM is an <em>imperative</em> programming model that is used to interact with the page markup.
+              The DOM (<strong>D</strong>ocument <strong>O</strong>bject <strong>Mo</strong>del) is an <em>imperative</em> programming interface that is used to interact with the page markup.
             </p>
 
             <p>It can be...</p>
@@ -227,8 +226,7 @@
           <section>
             <h2>Imperative UI Definition</h2>
 
-            <pre><code data-trim data-line-numbers="|4,5|4,5,12|4,5,12,7,10|" class="js fragment">
-              // Imperative
+            <pre><code data-trim data-line-numbers="|3,4|3,4,11|3,4,11,6,9|" class="js fragment">
               let counter = 0
 
               const button = document.createElement('button')
@@ -241,6 +239,13 @@
 
               body.appendChild(button)
             </code></pre>
+
+            <div class="fragment" style="margin:0 auto;padding-left:10rem">
+              <img src="media/imperative2.png" style="width:18%">
+              <img src="media/imperative3.png" style="width:18%">
+              <img src="media/imperative4.png" style="width:18%">
+              <img src="media/imperative5.png" style="width:18%">
+            </div>
           </section>
 
           <section>
@@ -251,12 +256,14 @@
                 const [count, setCount] = useState(0)
 
                 return (
-                  &lt;button on:click={() => setCount(count++)}&gt;
+                  &lt;button on:click={() => setCount(count + 1)}&gt;
                     clickcount: {count}
                   &lt;/button&gt;
                 )
               }
             </code></pre>
+
+            <img src="media/declarative.png" style="width:30%;display:block;padding-left:10rem" class="fragment">
           </section>
 
           <section data-transition="slide-in fade-out">
@@ -369,7 +376,7 @@
             <h2>Templating</h2>
             <pre><code data-trim data-line-numbers="|2|5|" class="html">
               <script lang="ts">
-                const name = 'world';
+                const name = 'world'
               </script>
 
               <h2>Hello {name}!</h2>
@@ -601,7 +608,7 @@
               <small>(and what's this weird $: thing...)</small>
             </h2>
 
-            <pre class="fragment" style="width:50%;border:5px solid #2c02ff;opacity:0.98;position:absolute;top:30%;left:30%"><code data-trim data-line-numbers="|4,6,11,12|3-6,11,12|8|" class="javascript">
+            <pre class="fragment" style="width:50%;border:10px solid #2c02ff;opacity:0.98;position:absolute;top:20%;left:20%"><code data-trim data-line-numbers="|4,6,11,12|3-6,11,12|8|" class="javascript">
               // tangent: the $: thing
 
               loop1:
