@@ -75,6 +75,18 @@
         padding: 0.5em;
         font-size: 0.6em;
       }
+
+      .image-stack {
+        position: relative;
+        height: 30rem;
+      }
+
+      .image-stack img {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+      }
     </style>
   </head>
 
@@ -88,6 +100,12 @@
           <img src="media/svelte.svg" width="18%"><br>
           <h1>Svelte 101</h1>
           <img src="inovex/graphics/inovex.svg" width="15%" style="margin-bottom:2em">
+        </section>
+
+        <section>
+          <h2>Manuel Ernst</h2>
+          software engineer at inovex 
+
         </section>
 
         <section>
@@ -147,50 +165,100 @@
         </section>
 
         <section>
-          <h2>DOM Intro</h2>
+          <section>
+            <h2>DOM Intro</h2>
 
-          <p>
-            The DOM is the programming model that is used to interact with the page markup.
-          </p>
+            <p>
+              The DOM is an <em>imperative</em> programming model that is used to interact with the page markup.
+            </p>
 
-          <p>It can be...</p>
-          <ul>
-            <li class="fragment">inspected,</li>
-            <li class="fragment">amended,</li>
-            <li class="fragment">mutated.</code></li>
-          </ul>
+            <p>It can be...</p>
+            <ul>
+              <li class="fragment">inspected,</li>
+              <li class="fragment">amended,</li>
+              <li class="fragment">mutated.</code></li>
+            </ul>
 
-          <img class="fragment" src="media/ohey.png" style="position:absolute;right:0;width:40%;bottom:0" />
-        </section>
+            <!-- <img class="fragment" src="media/ohey.png" style="position:absolute;right:0;width:40%;bottom:0" /> -->
+          </section>
 
-        <section>
-          <h2>DOM Intro</h2>
+          <!-- <section>
+            <h2>DOM Intro</h2>
 
-          <iframe src="https://svelte.dev/repl/f603e44111f5488e9b440646ad6322e0?version=3.55.1"
-            style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
-            title="dom-intro"
-            allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
-            sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
-          ></iframe>
+            <iframe src="https://svelte.dev/repl/f603e44111f5488e9b440646ad6322e0?version=3.55.1"
+              style="width:130%; height:700px; border:0; border-radius: 4px; overflow:hidden;"
+              title="dom-intro"
+              allow="accelerometer; ambient-light-sensor; camera; encrypted-media; geolocation; gyroscope; hid; microphone; midi; payment; usb; vr; xr-spatial-tracking"
+              sandbox="allow-forms allow-modals allow-popups allow-presentation allow-same-origin allow-scripts"
+            ></iframe>
 
-          <aside class="notes">
-            const body = document.querySelector('body');
+            <aside class="notes">
+              const body = document.querySelector('body');
 
-            let counter = 0
+              let counter = 0
 
-            const button = document.createElement('button')
-            button.innerText = `clickcount: ${counter}`
-
-            button.addEventListener('click', () => {
-              counter++
+              const button = document.createElement('button')
               button.innerText = `clickcount: ${counter}`
-            })
 
-            body.appendChild(button)
-          </aside>
-        </section>
+              button.addEventListener('click', () => {
+                counter++
+                button.innerText = `clickcount: ${counter}`
+              })
 
-        <section>
+              body.appendChild(button)
+            </aside>
+          </section> -->
+
+          <section>
+            <h2>Imperative vs. Declarative</h2>
+
+            <div class="image-stack">
+              <img src="media/imperative0.png" class="fragment">
+
+              <img src="media/imperative2.png" class="fragment">
+              <img src="media/imperative3.png" class="fragment">
+              <img src="media/imperative4.png" class="fragment">
+              <img src="media/imperative5.png" class="fragment">
+
+              <img src="media/imperative1.png" class="fragment">
+            </div>
+          </section>
+
+          <section>
+            <h2>Imperative UI Definition</h2>
+
+            <pre><code data-trim data-line-numbers="|4,5|4,5,12|4,5,12,7,10|" class="js fragment">
+              // Imperative
+              let counter = 0
+
+              const button = document.createElement('button')
+              button.innerText = `clickcount: ${counter}`
+
+              button.addEventListener('click', () => {
+                counter++
+                button.innerText = `clickcount: ${counter}`
+              })
+
+              body.appendChild(button)
+            </code></pre>
+          </section>
+
+          <section>
+            <h2>Declarative UI Definition</h2>
+
+            <pre><code data-trim data-line-numbers="" class="js fragment">
+              function Counter() {
+                const [count, setCount] = useState(0)
+
+                return (
+                  &lt;button on:click={() => setCount(count++)}&gt;
+                    clickcount: {count}
+                  &lt;/button&gt;
+                )
+              }
+            </code></pre>
+          </section>
+
           <section data-transition="slide-in fade-out">
             <h2>
               <img src="media/react.svg" style="width:1em" /> Runtime DOM Diffing
@@ -1011,6 +1079,7 @@
             <li>Tutorial: <a href="https://svelte.dev/tutorial">https://svelte.dev/tutorial</a></li>
             <li>Documentation: <a href="https://svelte.dev/docs">https://svelte.dev/docs</a></li>
             <li>Sveltekit: <a href="https://kit.svelte.dev">https://kit.svelte.dev</a></li>
+            <li>Slides: <a href="https://gitlab.inovex.de/mernst/svelte-talk">https://gitlab.inovex.de/mernst/svelte-talk</a></li>
           </ul>
 
         </section>
